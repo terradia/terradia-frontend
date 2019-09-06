@@ -1,6 +1,5 @@
 import React from "react";
 import Card from "../components/Card"
-import Drawer from "../components/Drawer";
 import Header from "../components/Header";
 
 function cardList() {
@@ -30,7 +29,6 @@ export default function Home(props) {
     return (
         <div>
             <Header/>
-            <Drawer/>
             <div style={HomeStyle}>
                 {cards.map(card => (
                     <Card key={card.id} content={card}/>

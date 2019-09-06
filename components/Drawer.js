@@ -36,10 +36,7 @@ export default class Drawer extends React.Component {
     render() {
         return (
             <div>
-                <Button type="primary" shape="circle" icon="download"/>
-                <Button type="primary" onClick={this.showDrawer}>
-                    Open drawer
-                </Button>
+                <Button type="primary" onClick={this.showDrawer} icon="menu"/>
                 <AntDrawer
                     title="Multi-level drawer"
                     width={520}
