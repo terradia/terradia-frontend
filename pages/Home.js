@@ -1,6 +1,9 @@
 import React from "react";
 import Card from "../components/Card"
 import Header from "../components/Header";
+import Modal from "../components/Modal";
+import Input from "../components/Input";
+import { Icon } from 'antd'
 
 function cardList() {
     return [
@@ -26,6 +29,10 @@ export default function Home(props) {
         display: "flex"
     };
 
+    let InputStyle = {
+        width: "300px"
+    };
+
     return (
         <div>
             <Header/>
@@ -35,6 +42,40 @@ export default function Home(props) {
                 ))
                 }
             </div>
+            <Modal/>
+            <Input
+                addonBefore={"Avant"}
+                addonAfter={"Après"}
+                style={InputStyle}
+                allowClear={true}
+                defaultValue={"Mechant MEchant"}
+                disabled={false}
+                placeholder={'Please write your name'}
+                id={'id_test1'}
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                suffix={<Icon type="stop"/>}
+            />
+            <Input
+                isPassword={true}
+                style={InputStyle}
+                allowClear={true}
+                disabled={false}
+                search={false}
+                placeholder={'Please write your name'}
+                id={'id_test2'}
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                suffix={<Icon type="stop"/>}
+            />
+            <Input
+                style={InputStyle}
+                allowClear={true}
+                disabled={false}
+                search={false}
+                placeholder={'Please write your name'}
+                id={'id_test3'}
+                prefix={<Icon type="user" style={{ color: 'red' }} />}
+                suffix={<Icon type="stop"/>}
+            />
         </div>
     );
 }
