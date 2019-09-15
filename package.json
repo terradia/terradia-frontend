@@ -12,6 +12,7 @@
     "antd": "^3.23.2",
     "babel-plugin-import": "^1.12.1",
     "next": "latest",
+    "null-loader": "^3.0.0",
     "react": "16.9.0",
     "react-dom": "16.9.0"
   },

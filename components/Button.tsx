@@ -23,7 +23,7 @@ Button.defaultProps = {
     shape: undefined,
     isLoading: false,
     icon: undefined,
-    size: "Normal",
+    size: "default",
     targetLink: "",
     fitParentWidth: false,
     onClick: undefined
