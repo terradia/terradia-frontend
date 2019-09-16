@@ -8,6 +8,7 @@ export interface ButtonProps {
     color?: ButtonType;
     disable?: boolean;
     shape?: ButtonShape;
+    style?: object
     isLoading?: boolean;
     icon?: undefined;
     size?: ButtonSize;
@@ -26,7 +27,7 @@ Button.defaultProps = {
     size: "default",
     targetLink: "",
     fitParentWidth: false,
-    onClick: undefined
+    onClick: undefined,
 };
 
 export default function Button(props: ButtonProps)  {
@@ -38,7 +39,8 @@ export default function Button(props: ButtonProps)  {
                        onClick={props.onClick}
                        size={props.size}
                        target={props.targetLink}
-                       block={props.fitParentWidth}>
+                       block={props.fitParentWidth}
+            >
                 {props.icon}
                 {props.text}
                 {props.children}

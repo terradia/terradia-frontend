@@ -22,8 +22,6 @@ export default class Input extends React.Component {
     };
 
     render() {
-        console.log(this.props);
-
         let inputType;
         const {enterButton, onSearch, ...props} = this.props;
 
