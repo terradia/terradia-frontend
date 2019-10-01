@@ -3,6 +3,7 @@ import {Icon} from 'antd'
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
+import Form from "../components/Form";
 
 
 const inputStyle = {
@@ -31,6 +32,7 @@ export default class Login extends React.Component {
     };
 
     render() {
+        let test = <Input type={"default"} style={inputStyle} placeholder={'Login'} id={'id_login'} ref={React.createRef()}/>
         return (
             <div>
                 <div style={{position: 'absolute', left: '95%'}}>
@@ -56,39 +58,52 @@ export default class Login extends React.Component {
                         })
                     }}
                 >
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        textAlign: 'center',
-                        padding: '9%'
-                    }}
-                    >
-                        <Input
-                            type={"default"}
-                            style={inputStyle}
-                            placeholder={'Login'}
-                            id={'id_login'}
-                            addonBefore={"Login"}
-                            onChange={(e) => {
-                                this.setState({
-                                    id: e.target.value
-                                })
-                            }}
-                        />
-                        <Input
-                            type={"password"}
-                            style={inputStyle}
-                            placeholder={'Password'}
-                            id={'id_password'}
-                            addonBefore={"Password"}
-                            value={this.state.password}
-                            onChange={(e) => {
-                                this.setState({
-                                    password: e.target.value
-                                })
-                            }}
-                        />
-                    </div>
+                    <Form labelAlign={'left'} layout={'inline'} colon={false} items={[
+                        {
+                            id: 'input1',
+                            content: test
+                        },
+                        {
+                            id: 'input2',
+                            content: <Button color={"primary"} onClick={() => {alert('Tu as cliqué sur le bouton')}}>Test</Button>,
+                            label: 'TestButton'
+                        }
+                    ]}/>
+
+
+                    {/*<div style={{*/}
+                    {/*    display: 'flex',*/}
+                    {/*    flexDirection: 'column',*/}
+                    {/*    textAlign: 'center',*/}
+                    {/*    padding: '9%'*/}
+                    {/*}}*/}
+                    {/*>*/}
+                    {/*    <Input*/}
+                    {/*        type={"default"}*/}
+                    {/*        style={inputStyle}*/}
+                    {/*        placeholder={'Login'}*/}
+                    {/*        id={'id_login'}*/}
+                    {/*        addonBefore={"Login"}*/}
+                    {/*        onChange={(e) => {*/}
+                    {/*            this.setState({*/}
+                    {/*                id: e.target.value*/}
+                    {/*            })*/}
+                    {/*        }}*/}
+                    {/*    />*/}
+                    {/*    <Input*/}
+                    {/*        type={"password"}*/}
+                    {/*        style={inputStyle}*/}
+                    {/*        placeholder={'Password'}*/}
+                    {/*        id={'id_password'}*/}
+                    {/*        addonBefore={"Password"}*/}
+                    {/*        value={this.state.password}*/}
+                    {/*        onChange={(e) => {*/}
+                    {/*            this.setState({*/}
+                    {/*                password: e.target.value*/}
+                    {/*            })*/}
+                    {/*        }}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                 </Modal>
             </div>
         );

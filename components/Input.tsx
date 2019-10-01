@@ -5,7 +5,7 @@ export interface InputProps {
     addonAfter?: string;
     addonBefore?: string;
     allowClear?: boolean;
-    defaultValue?: string;
+    // defaultValue?: string;
     disabled?: boolean;
     enterButton?: boolean;
     id?: string;
@@ -20,7 +20,7 @@ export interface InputProps {
 Input.defaultProps = {     addonAfter: "", // (string) The label text displayed after (on the right side of) the input field
     addonBefore: "", // (string) The label text displayed before (on the left side of) the input field
     allowClear: false, // (boolean) allow to remove input content with clear icon
-    defaultValue: "", // (string) default value of input
+    // defaultValue: "", // (string) default value of input
     disabled: false, // (boolean) Whether the input is disabled
     enterButton: false, // (boolean) to show an enter button after input. This prop is conflict with addon | work only if this.props.type is "search"
     id: "", // (string) the id of the input
