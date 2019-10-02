@@ -3,6 +3,11 @@ import Head from 'next/head'
 import Login from './Login'
 import Card from '../components/Card';
 import {Layout} from 'antd';
+import {ApolloProvider} from '@apollo/react-hooks'
+import fetch from 'node-fetch'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import ApolloClient from 'apollo-client'
 
 const {Header, Footer, Content} = Layout;
 
@@ -22,8 +27,17 @@ let cardList = [
 ];
 
 
+
+const client = new ApolloClient({
+    link: createHttpLink({
+        uri: "http://localhost:8000/graphql",
+        fetch: fetch,
+    }),
+    cache: new InMemoryCache(),
+});
+
 const Index = () => (
-    <div>
+    <ApolloProvider client={client}>
         <Head>
             <title>Terradia</title>
             <link rel="shortcut icon" href="/static/app.png"/>
@@ -57,7 +71,7 @@ const Index = () => (
                 Copyright © 2019 Terradia Inc. All rights reserved.
             </Footer>
         </Layout>
-    </div>
+    </ApolloProvider>
 );
 
 export default Index
