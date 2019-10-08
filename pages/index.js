@@ -6,6 +6,7 @@ import {Layout} from 'antd';
 import {ApolloProvider} from '@apollo/react-hooks'
 import fetch from 'node-fetch'
 import { createHttpLink } from 'apollo-link-http'
+import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import ApolloClient from 'apollo-client'
 
@@ -26,13 +27,23 @@ let cardList = [
     },
 ];
 
+const httpLink = createHttpLink({
+    uri: "http://localhost:8000/graphql",
+    fetch: fetch
+});
 
+const authLink = setContext((_, {headers}) => {
+    const token = localStorage.getItem('token');
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : "",
+        }
+    }
+});
 
 const client = new ApolloClient({
-    link: createHttpLink({
-        uri: "http://localhost:8000/graphql",
-        fetch: fetch,
-    }),
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 

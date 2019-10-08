@@ -4,7 +4,8 @@ import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
 import {gql} from "apollo-boost"
-import {Mutation} from "@apollo/react-components";
+import {ApolloConsumer, Mutation, Query} from "@apollo/react-components";
+import ApolloClient from "apollo-client";
 
 
 const inputStyle = {
@@ -38,15 +39,29 @@ const REGISTER = gql`
     }
 `;
 
+const GET_USER = gql`
+    {
+        getUser {
+            id
+            firstName
+            lastName
+            email
+            phone
+            password
+            validated
+        }
+    }
+`;
+
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             modalLogin: false,
-            email: '',
-            password: '',
+            isLog: this.props.isLog,
             confirmLoading: false
         };
+
     }
 
     openModal = () => {
@@ -56,11 +71,16 @@ export default class Login extends React.Component {
         });
     };
 
-    OnCompletedHandler = (data) => {
+    OnCompletedHandler = (client, data) => {
+        console.log(client);
         console.log(data);
         this.setState({
-            confirmLoading: false
+            confirmLoading: false,
+            modalLogin: false,
+            isLog: true
         });
+        localStorage.setItem('token', data.login.token);
+        client.resetStore();
     };
 
     OnErrorHandler = (data) => {
@@ -71,72 +91,89 @@ export default class Login extends React.Component {
     };
 
     render() {
+        let email = "";
+        let password = "";
         return (
-            <div>
-                <div style={{position: 'absolute', left: '95%'}}>
-                    <Button color={"primary"} onClick={this.openModal}>Login</Button>
-                </div>
-                <Mutation mutation={LOGIN} onCompleted={this.OnCompletedHandler} onError={this.OnErrorHandler}>
-                    {(login) => (
-                        <Modal
-                            title={"Login"}
-                            centered
-                            visible={this.state.modalLogin}
-                            confirmLoading={this.state.confirmLoading}
-                            onCancel={() => {
-                                console.log('User: ', this.state.email);
-                                console.log('Password: ', this.state.password);
-                                this.setState({
-                                    modalLogin: false
-                                })
+            <ApolloConsumer>
+                {client => (
+                    <div style={{position: 'absolute', left: '95%'}}>
+                        <Query query={GET_USER}>
+                            {({loading, error, data}) => {
+                                console.log(data);
+                                if (data && data.getUser) {
+                                    let username = data.getUser.firstName + " " + data.getUser.lastName;
+                                    return (
+                                        <div>
+                                            <Button color={"primary"} onClick={() => client.resetStore()} style={{marginLeft: '10px'}}>{username} Logout</Button>
+                                        </div>
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <div>
+                                            <Button color={"primary"} onClick={this.openModal}>Login</Button>
+                                            <Mutation mutation={LOGIN} onCompleted={(data) => {
+                                                this.OnCompletedHandler(client, data)
+                                            }} onError={this.OnErrorHandler}>
+                                                {(login) => (
+                                                    <Modal
+                                                        title={"Login"}
+                                                        centered
+                                                        visible={this.state.modalLogin}
+                                                        confirmLoading={this.state.confirmLoading}
+                                                        onCancel={() => {
+                                                            this.setState({
+                                                                modalLogin: false
+                                                            })
+                                                        }}
+                                                        onOk={() => {
+                                                            this.setState({
+                                                                confirmLoading: true
+                                                            });
+                                                            //register({variables: {firstname: "test", lastname: "Test", password: "test", email: "test@test.test", phone: "test"}});
+                                                            login({variables: {email: email, password: password}});
+                                                        }}
+                                                    >
+                                                        <div style={{
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            textAlign: 'center',
+                                                            padding: '9%'
+                                                        }}
+                                                        >
+                                                            <Input
+                                                                type={"default"}
+                                                                style={inputStyle}
+                                                                placeholder={'Login'}
+                                                                id={'id_login'}
+                                                                addonBefore={"Login"}
+                                                                onChange={(e) => {
+                                                                    email = e.target.value;
+                                                                }}
+                                                            />
+                                                            <Input
+                                                                type={"password"}
+                                                                style={inputStyle}
+                                                                placeholder={'Password'}
+                                                                id={'id_password'}
+                                                                addonBefore={"Password"}
+                                                                onChange={(e) => {
+                                                                    console.log(e.target.value);
+                                                                    password = e.target.value
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </Modal>
+                                                )}
+                                            </Mutation>
+                                        </div>
+                                    )
+                                }
                             }}
-                            onOk={() => {
-                                console.log('User: ', this.state.email);
-                                console.log('Password: ', this.state.password);
-                                this.setState({
-                                    confirmLoading: true
-                                });
-                                //register({variables: {firstname: "test", lastname: "Test", password: "test", email: "test@test.test", phone: "test"}});
-                                login({variables: {email: this.state.email, password: this.state.password}});
-                            }}
-                        >
-                            <div style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                textAlign: 'center',
-                                padding: '9%'
-                            }}
-                            >
-                                <Input
-                                    type={"default"}
-                                    style={inputStyle}
-                                    placeholder={'Login'}
-                                    id={'id_login'}
-                                    addonBefore={"Login"}
-                                    onChange={(e) => {
-                                        this.setState({
-                                            email: e.target.value
-                                        })
-                                    }}
-                                />
-                                <Input
-                                    type={"password"}
-                                    style={inputStyle}
-                                    placeholder={'Password'}
-                                    id={'id_password'}
-                                    addonBefore={"Password"}
-                                    value={this.state.password}
-                                    onChange={(e) => {
-                                        this.setState({
-                                            password: e.target.value
-                                        })
-                                    }}
-                                />
-                            </div>
-                        </Modal>
-                    )}
-                </Mutation>
-            </div>
+                        </Query>
+                    </div>
+                )}
+            </ApolloConsumer>
         );
     }
 }
