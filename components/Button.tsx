@@ -13,6 +13,7 @@ export interface ButtonProps {
     icon?: undefined;
     size?: ButtonSize;
     targetLink?: string;
+    htmlType?: 'button' | 'reset' | 'submit' | undefined;
     fitParentWidth?: boolean;
     onClick?: React.MouseEventHandler<HTMLElement>
 }
@@ -26,6 +27,7 @@ Button.defaultProps = {
     icon: undefined,
     size: "default",
     targetLink: "",
+    htmlType: undefined,
     fitParentWidth: false,
     onClick: undefined,
 };
@@ -40,6 +42,7 @@ export default function Button(props: ButtonProps)  {
                        size={props.size}
                        target={props.targetLink}
                        block={props.fitParentWidth}
+                       htmlType={props.htmlType}
             >
                 {props.icon}
                 {props.text}
