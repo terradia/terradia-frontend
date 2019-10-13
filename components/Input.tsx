@@ -1,5 +1,5 @@
 import {Input as AntInput} from 'antd'
-import React from "react";
+import React, {ChangeEventHandler} from "react";
 
 export interface InputProps {
     addonAfter?: string;
@@ -15,9 +15,11 @@ export interface InputProps {
     prefix?: string;
     size?: "default" | "large" | "small" | undefined;
     suffix?: string;
+    onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-Input.defaultProps = {     addonAfter: "", // (string) The label text displayed after (on the right side of) the input field
+Input.defaultProps = {
+    addonAfter: "", // (string) The label text displayed after (on the right side of) the input field
     addonBefore: "", // (string) The label text displayed before (on the left side of) the input field
     allowClear: false, // (boolean) allow to remove input content with clear icon
     // defaultValue: "", // (string) default value of input
@@ -33,7 +35,7 @@ Input.defaultProps = {     addonAfter: "", // (string) The label text displayed 
     prefix: "", // (string) the prefix icon of the input
     size: 'default', // (string) size of the input
     suffix: "" // (string) the suffix icon of the input | if this.props.type is "password", suffix icon will be replaced by the icon "hide" for password
-    };
+};
 
 export default function Input(props: InputProps) {
     let inputType;
