@@ -2,8 +2,9 @@ import React from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import Input from "../components/Input";
+import {Checkbox} from "antd";
 // import {Icon, Checkbox} from 'antd';
-import {gql} from "apollo-boost"
+// import {gql} from "apollo-boost"
 // import {Mutation} from "@apollo/react-components";
 // import {Formik, FormikActions, FormikProps, Form, Field, FieldProps, withFormik } from 'formik';
 import {Formik} from 'formik';
@@ -14,14 +15,14 @@ const inputStyle = {
     width: "400px",
 };
 
-const LOGIN = gql`
-    mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-            token
-            userId
-        }
-    }
-`;
+// const LOGIN = gql`
+//     mutation Login($email: String!, $password: String!) {
+//         login(email: $email, password: $password) {
+//             token
+//             userId
+//         }
+//     }
+// `;
 //
 // const REGISTER = gql`
 //     mutation reg ($firstname: String!, $lastname: String!, $password: String!, $email: String!, $phone: String!) {
@@ -87,12 +88,12 @@ export default class Login extends React.Component <MyProps, MyState> {
     closeModal = () => {
         console.log("closing modal");
         this.setState({
-            modalLogin: false
+            modalLogin: false,
+            confirmLoading: false
         });
     };
 
-    OnCompletedHandler = (data: any) => {
-        console.log(data);
+    OnCompletedHandler = () => {
         this.setState({
             confirmLoading: false
         });
@@ -106,12 +107,11 @@ export default class Login extends React.Component <MyProps, MyState> {
     };
 
     submitForm = (values: { email: any; password: any; }) => {
-
+        console.log('Received values of form: ', values);
         this.setState({
             confirmLoading: true
         });
-        console.log('Received values of form: ', values);
-        LOGIN({variables: {email: values.email, password: values.password}});
+        // login({variables: {email: values.email, password: values.password}});
         this.closeModal();
 
         // register({
@@ -144,7 +144,7 @@ export default class Login extends React.Component <MyProps, MyState> {
                     }}
                 >
                     <Formik
-                        initialValues={{email: '', password: ''}}
+                        initialValues={{email: '', password: '', rememberMe: false}}
                         validationSchema={SignupSchema}
                         onSubmit={(values, actions) => {
                             console.log('values', values);
@@ -175,6 +175,12 @@ export default class Login extends React.Component <MyProps, MyState> {
                                         onChange={props.handleChange}
                                     />
                                     {props.errors.password && <div id="feedback">{props.errors.password}</div>}
+
+                                    <Checkbox name={'rememberMe'}
+                                              onChange={props.handleChange}
+                                    >
+                                        Remember Me
+                                    </Checkbox>
                                     <Button htmlType={"submit"} text={'Submit'}/>
                                 </form>
                             )
