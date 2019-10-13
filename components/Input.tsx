@@ -14,7 +14,6 @@ export interface InputProps {
     placeholder?: string;
     name?: string;
     onSearch(): any;
-    onChange: any;
     prefix?: string;
     size?: "default" | "large" | "small" | undefined;
     style?: object;
