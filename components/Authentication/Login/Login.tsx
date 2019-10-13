@@ -19,6 +19,7 @@ const GET_USER = gql`
 `;
 
 declare interface LoginProps {
+    onLoggedIn: (loginStatus: boolean) => void
 }
 
 declare interface LoginState {
@@ -56,6 +57,7 @@ export default class Login extends React.Component<LoginProps, LoginState> {
                         {({loading, data}) => {
                             if (loading)
                                 return <Icon type={"loading"}/>;
+                            this.props.onLoggedIn(!!(data && data.getUser));
                             return <LoginButton client={client} data={data}/>;
                         }}
                     </Query>

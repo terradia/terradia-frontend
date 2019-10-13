@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, {ReactNode, useState} from "react";
 import Head from 'next/head'
 import {Layout as AntLayout, Menu} from "antd";
 import Login from "../components/Authentication/Login/Login";
@@ -13,6 +13,12 @@ declare interface LayoutProps {
 }
 
 export const Layout = (props: LayoutProps) => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const IsLoggedInHandler = (loginStatus: boolean) => {
+        setIsLoggedIn(loginStatus);
+    };
+
     return (
         <div>
             <Head>
@@ -31,15 +37,17 @@ export const Layout = (props: LayoutProps) => {
                 }}
                 >
                     <Menu mode={"horizontal"} style={{lineHeight: '8vh', background: 'none'}}>
-                        <Menu.Item key={'logo'}>
+                        <Menu.Item key={'logo'} style={{float: 'left'}}>
                             <img src="/static/Titreblanc.png" style={{maxHeight: '6vh', top: '1vh'}} alt={"Terradia"}/>
                         </Menu.Item>
-                        <Menu.Item key={'login'}>
-                            <Login/>
+                        <Menu.Item key={'login'} style={{float: 'right'}}>
+                            <Login onLoggedIn={IsLoggedInHandler}/>
                         </Menu.Item>
-                        <Menu.Item key={'register'}>
-                            <Register/>
-                        </Menu.Item>
+                        {!isLoggedIn &&
+                            <Menu.Item key={'register'} style={{float: 'right'}}>
+                                <Register/>
+                            </Menu.Item>
+                        }
                     </Menu>
                 </AntHeader>
 
