@@ -1,14 +1,12 @@
 import React from 'react'
-import {Alert, Checkbox} from "antd";
 import Modal from '../../Modal'
-import MyInput from '../../Input'
-import {notification as _notification} from 'antd'
+import Input from '../../Input'
 import Button from "../../Button";
 import {Formik} from "formik";
 import * as Yup from 'yup';
+import {Alert, notification as _notification} from "antd";
 
-
-const SignInSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
     email: Yup.string()
         .email('Your email is invalid')
         .required('Your email is required')
@@ -18,16 +16,23 @@ const SignInSchema = Yup.object().shape({
         .required('Your password is required')
         .min(2, 'Your password must be longer than 2 character')
         .max(20, 'It is long password')
+    ,
+    lastname: Yup.string()
+        .required('Your Lastname is required')
+    ,
+    firstname: Yup.string()
+        .required('Your Lastname is required')
+
 });
 
 declare interface LoginModalProps {
-    login: any
+    register: any
 }
 
 declare interface LoginModalState {
     modalLogin: boolean;
     confirmLoading: boolean;
-    errorLogin: undefined | string
+    errorRegister: string | undefined,
 }
 
 const inputStyle = {
@@ -39,7 +44,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
     state = {
         modalLogin: false,
         confirmLoading: false,
-        errorLogin: 'None',
+        errorRegister: 'None',
     };
 
     openModal = () => {
@@ -55,36 +60,46 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         });
     };
 
-    submitForm = (values: { email: any; password: any; }) => {
+    submitForm = (values: { firstname: string, lastname: string, email: string, password: string, phone: string }) => {
         this.setState({
             confirmLoading: true,
-            errorLogin: 'None'
+            errorRegister: 'None'
         });
-        this.props.login({variables: {email: values.email, password: values.password}}).then((data: any) => {
+        this.props.register({
+            variables: {
+                firstname: values.firstname,
+                lastname: values.lastname,
+                email: values.email,
+                password: values.password,
+                phone: values.phone
+            }
+        }).then((data: any) => {
             if (data) {
                 this.closeModal();
-                this.successLoginNotification();
+                this.successRegisterNotification();
             } else {
                 this.setState({
-                    errorLogin: undefined
+                    errorRegister: undefined
                 })
             }
             this.setState({confirmLoading: false});
         });
     };
 
-    successLoginNotification = () => {
+    successRegisterNotification = () => {
         _notification['success']({
-            message: 'Login Sucess',
+            message: 'Register Sucess',
             description:
-                'You\'re now log in your account.',
+                'Please check your email and follow the instructions.',
         });
     };
 
     render() {
         return (
             <div>
-                <Button color={"primary"} onClick={this.openModal}>Login</Button>
+                <Button color={"primary"} onClick={this.openModal}>
+                    Register
+                </Button>
                 <Modal
                     title={"Login"}
                     centered
@@ -95,10 +110,10 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                         console.log('Ok de la modal') // TODO: Use the modal button to submit the form
                     }}
                 >
-                    <Alert message="We cannot find an account with that email/password" type="error" style={{display: this.state.errorLogin}}/>
+                    <Alert message="There is an error. Please try again later" type="error" style={{display: this.state.errorRegister}}/>
                     <Formik
-                        initialValues={{email: '', password: '', rememberMe: false}}
-                        validationSchema={SignInSchema}
+                        initialValues={{firstname: '', lastname: '', email: '', password: '', phone: ''}}
+                        validationSchema={RegisterSchema}
                         validateOnChange={false}
                         validateOnBlur={true}
                         onSubmit={(values) => {
@@ -109,23 +124,50 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                         {(props: any) => {
                             return (
                                 <form onSubmit={props.handleSubmit}>
-                                    <MyInput
+                                    <Input
+                                        name={'firstname'}
+                                        type={"default"}
+                                        style={{...{color: props.errors.firstname ? 'red' : undefined,
+                                            borderColor: props.errors.firstname ? 'red' : undefined}, ...inputStyle}}
+                                        placeholder={'Firstname'}
+                                        id={'id_firstname'}
+                                        autoComplete={'firstname'}
+                                        onChange={props.handleChange}
+                                    />
+                                    {props.errors.firstname &&
+                                    <div id="feedback" style={{color: "red"}}>{props.errors.firstname}</div>}
+
+                                    <Input
+                                        name={'lastname'}
+                                        type={"default"}
+                                        style={{...{color: props.errors.lastname ? 'red' : undefined,
+                                            borderColor: props.errors.lastname ? 'red' : undefined}, ...inputStyle}}
+                                        placeholder={'Lastname'}
+                                        id={'id_lastname'}
+                                        autoComplete={'lastname'}
+                                        onChange={props.handleChange}
+                                    />
+                                    {props.errors.lastname &&
+                                    <div id="feedback" style={{color: "red"}}>{props.errors.lastname}</div>}
+
+                                    <Input
                                         name={'email'}
-                                        type={'default'}
+                                        type={"default"}
                                         style={{...{color: props.errors.email ? 'red' : undefined,
-                                            borderColor: props.errors.email ? 'red' : undefined}, ...inputStyle}}
-                                        placeholder={'Login'}
+                                        borderColor: props.errors.email ? 'red' : undefined}, ...inputStyle}}
+                                        placeholder={'Email'}
                                         id={'id_login'}
                                         autoComplete={'email'}
                                         onChange={props.handleChange}
                                     />
                                     {props.errors.email &&
                                     <div id="feedback" style={{color: "red"}}>{props.errors.email}</div>}
-                                    <MyInput
+
+                                    <Input
                                         name={'password'}
                                         type={"password"}
                                         style={{...{color: props.errors.password ? 'red' : undefined,
-                                                borderColor: props.errors.password ? 'red' : undefined}, ...inputStyle}}
+                                            borderColor: props.errors.password ? 'red' : undefined}, ...inputStyle}}
                                         placeholder={'Password'}
                                         id={'id_password'}
                                         autoComplete={'current-password'}
@@ -134,11 +176,6 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                     {props.errors.password &&
                                     <div id="feedback" style={{color: "red"}}>{props.errors.password}</div>}
 
-                                    <Checkbox name={'rememberMe'}
-                                              onChange={props.handleChange}
-                                    >
-                                        Remember Me
-                                    </Checkbox>
                                     <Button onClick={() => props.validateForm().then(() => {
                                         props.submitForm();
                                     })} text={'Submit'}/>

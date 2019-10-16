@@ -2,7 +2,7 @@ import React, {ReactNode, useState} from "react";
 import Head from 'next/head'
 import {Layout as AntLayout, Menu} from "antd";
 import Login from "../components/Authentication/Login/Login";
-import Register from "../components/Authentication/Register";
+import Register from "../components/Authentication/Register/Register";
 
 const AntHeader = AntLayout.Header;
 const AntFooter = AntLayout.Footer;

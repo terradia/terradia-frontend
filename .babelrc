@@ -6,7 +6,9 @@
       {
         "libraryName": "antd",
         "style": "css"
-      }
+      },
+
+      "styled-jsx/babel"
     ]
   ]
 }
