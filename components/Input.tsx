@@ -5,7 +5,7 @@ export interface InputProps {
     addonAfter?: string;
     addonBefore?: string;
     allowClear?: boolean;
-    autoComplete: string, // for google
+    autoComplete?: string, // for google
     // defaultValue?: string;
     disabled?: boolean;
     enterButton?: boolean;

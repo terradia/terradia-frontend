@@ -4,7 +4,6 @@ import {Modal as AntModal} from 'antd'
 export interface ModalProps {
     children?: Element | ReactElement | Element[] | ReactElement[];
     centered?: boolean;
-    children?: React.ReactChildren;
     closable?: boolean;
     closeIcon?: ReactNode;
     confirmLoading?: boolean;

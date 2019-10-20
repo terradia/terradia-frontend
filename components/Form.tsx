@@ -90,8 +90,5 @@ const form = class Form extends React.Component<FormProps & FormComponentProps, 
 const goodForm = AntForm.create({name: 'my_form'})(form);
 
 
-const goodForm = AntForm.create({name: 'my_form'})(form);
-
-
 
 export default goodForm

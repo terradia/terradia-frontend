@@ -100,38 +100,44 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                 <Button color={"primary"} onClick={this.openModal}>
                     Register
                 </Button>
-                <Modal
-                    title={"Login"}
-                    centered
-                    visible={this.state.modalLogin}
-                    confirmLoading={this.state.confirmLoading}
-                    onCancel={this.closeModal}
-                    onOk={() => {
-                        console.log('Ok de la modal') // TODO: Use the modal button to submit the form
+                <Formik
+                    initialValues={{firstname: '', lastname: '', email: '', password: '', phone: ''}}
+                    validationSchema={RegisterSchema}
+                    validateOnChange={false}
+                    validateOnBlur={true}
+                    onSubmit={(values) => {
+                        this.submitForm(values)
                     }}
                 >
-                    <Alert message="There is an error. Please try again later" type="error" style={{display: this.state.errorRegister}}/>
-                    <Formik
-                        initialValues={{firstname: '', lastname: '', email: '', password: '', phone: ''}}
-                        validationSchema={RegisterSchema}
-                        validateOnChange={false}
-                        validateOnBlur={true}
-                        onSubmit={(values) => {
-                            this.submitForm(values)
-                        }}
+                    {(props: any) => {
+                        return (
+                            <Modal
+                                title={"Login"}
+                                centered
+                                visible={this.state.modalLogin}
+                                confirmLoading={this.state.confirmLoading}
+                                onCancel={this.closeModal}
+                                destroyOnClose={true}
+                                onOk={() => props.validateForm().then(() => {
+                                    props.submitForm();
+                                })}
+                            >
+                                <Alert message="There is an error. Please try again later" type="error"
+                                       style={{display: this.state.errorRegister}}/>
 
-                    >
-                        {(props: any) => {
-                            return (
                                 <form onSubmit={props.handleSubmit}>
                                     <Input
                                         name={'firstname'}
                                         type={"default"}
-                                        style={{...{color: props.errors.firstname ? 'red' : undefined,
-                                            borderColor: props.errors.firstname ? 'red' : undefined}, ...inputStyle}}
+                                        style={{
+                                            ...{
+                                                color: props.errors.firstname ? 'red' : undefined,
+                                                borderColor: props.errors.firstname ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
                                         placeholder={'Firstname'}
                                         id={'id_firstname'}
-                                        autoComplete={'firstname'}
+                                        autoComplete={'given-name'}
                                         onChange={props.handleChange}
                                     />
                                     {props.errors.firstname &&
@@ -140,11 +146,15 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                     <Input
                                         name={'lastname'}
                                         type={"default"}
-                                        style={{...{color: props.errors.lastname ? 'red' : undefined,
-                                            borderColor: props.errors.lastname ? 'red' : undefined}, ...inputStyle}}
+                                        style={{
+                                            ...{
+                                                color: props.errors.lastname ? 'red' : undefined,
+                                                borderColor: props.errors.lastname ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
                                         placeholder={'Lastname'}
                                         id={'id_lastname'}
-                                        autoComplete={'lastname'}
+                                        autoComplete={'family-name'}
                                         onChange={props.handleChange}
                                     />
                                     {props.errors.lastname &&
@@ -153,8 +163,12 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                     <Input
                                         name={'email'}
                                         type={"default"}
-                                        style={{...{color: props.errors.email ? 'red' : undefined,
-                                        borderColor: props.errors.email ? 'red' : undefined}, ...inputStyle}}
+                                        style={{
+                                            ...{
+                                                color: props.errors.email ? 'red' : undefined,
+                                                borderColor: props.errors.email ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
                                         placeholder={'Email'}
                                         id={'id_login'}
                                         autoComplete={'email'}
@@ -166,24 +180,24 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                     <Input
                                         name={'password'}
                                         type={"password"}
-                                        style={{...{color: props.errors.password ? 'red' : undefined,
-                                            borderColor: props.errors.password ? 'red' : undefined}, ...inputStyle}}
+                                        style={{
+                                            ...{
+                                                color: props.errors.password ? 'red' : undefined,
+                                                borderColor: props.errors.password ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
                                         placeholder={'Password'}
                                         id={'id_password'}
-                                        autoComplete={'current-password'}
+                                        autoComplete={'new-password'}
                                         onChange={props.handleChange}
                                     />
                                     {props.errors.password &&
                                     <div id="feedback" style={{color: "red"}}>{props.errors.password}</div>}
-
-                                    <Button onClick={() => props.validateForm().then(() => {
-                                        props.submitForm();
-                                    })} text={'Submit'}/>
                                 </form>
-                            )
-                        }}
-                    </Formik>
-                </Modal>
+                            </Modal>
+                        )
+                    }}
+                </Formik>
             </div>
         )
     }

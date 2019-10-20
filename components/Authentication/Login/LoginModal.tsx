@@ -85,35 +85,44 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         return (
             <div>
                 <Button color={"primary"} onClick={this.openModal}>Login</Button>
-                <Modal
-                    title={"Login"}
-                    centered
-                    visible={this.state.modalLogin}
-                    confirmLoading={this.state.confirmLoading}
-                    onCancel={this.closeModal}
-                    onOk={() => {
-                        console.log('Ok de la modal') // TODO: Use the modal button to submit the form
+                <Formik
+                    initialValues={{email: '', password: '', rememberMe: false}}
+                    validationSchema={SignInSchema}
+                    validateOnChange={false}
+                    validateOnBlur={true}
+                    onSubmit={(values) => {
+                        this.submitForm(values)
                     }}
                 >
-                    <Alert message="We cannot find an account with that email/password" type="error" style={{display: this.state.errorLogin}}/>
-                    <Formik
-                        initialValues={{email: '', password: '', rememberMe: false}}
-                        validationSchema={SignInSchema}
-                        validateOnChange={false}
-                        validateOnBlur={true}
-                        onSubmit={(values) => {
-                            this.submitForm(values)
-                        }}
+                    {(props: any) => {
+                        return (
 
-                    >
-                        {(props: any) => {
-                            return (
+                            <Modal
+                                title={"Login"}
+                                centered
+                                visible={this.state.modalLogin}
+                                confirmLoading={this.state.confirmLoading}
+                                onCancel={this.closeModal}
+                                destroyOnClose={true}
+                                okText={"Login"}
+                                onOk={() => props.validateForm().then(() => {
+                                        props.submitForm();
+                                    })
+                                }
+                            >
+                                <Alert message="We cannot find an account with that email/password" type="error"
+                                       style={{display: this.state.errorLogin}}/>
+
                                 <form onSubmit={props.handleSubmit}>
                                     <MyInput
                                         name={'email'}
                                         type={'default'}
-                                        style={{...{color: props.errors.email ? 'red' : undefined,
-                                            borderColor: props.errors.email ? 'red' : undefined}, ...inputStyle}}
+                                        style={{
+                                            ...{
+                                                color: props.errors.email ? 'red' : undefined,
+                                                borderColor: props.errors.email ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
                                         placeholder={'Login'}
                                         id={'id_login'}
                                         autoComplete={'email'}
@@ -124,8 +133,12 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                     <MyInput
                                         name={'password'}
                                         type={"password"}
-                                        style={{...{color: props.errors.password ? 'red' : undefined,
-                                                borderColor: props.errors.password ? 'red' : undefined}, ...inputStyle}}
+                                        style={{
+                                            ...{
+                                                color: props.errors.password ? 'red' : undefined,
+                                                borderColor: props.errors.password ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
                                         placeholder={'Password'}
                                         id={'id_password'}
                                         autoComplete={'current-password'}
@@ -139,14 +152,11 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                     >
                                         Remember Me
                                     </Checkbox>
-                                    <Button onClick={() => props.validateForm().then(() => {
-                                        props.submitForm();
-                                    })} text={'Submit'}/>
                                 </form>
-                            )
-                        }}
-                    </Formik>
-                </Modal>
+                            </Modal>
+                        )
+                    }}
+                </Formik>
             </div>
         )
     }

@@ -33,7 +33,7 @@ Button.defaultProps = {
 };
 
 export default function Button(props: ButtonProps)  {
-    if (!props.disable)
+    // if (!props.disable)
         return (
             <AntButton type={props.color}
                        shape={props.shape}
@@ -49,5 +49,5 @@ export default function Button(props: ButtonProps)  {
                 {props.children}
             </AntButton>
         );
-    return null;
+    // return null;
 }
