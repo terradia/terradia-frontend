@@ -12,6 +12,8 @@ export interface ModalProps {
     maskClosable?: boolean;
     maskStyle?: object;
     okText?: string;
+    onCancel?: () => void;
+    onOk?: (e:any) => void;
     cancelText?: string;
     title?: string;
     visible?: boolean;
@@ -37,11 +39,13 @@ Modal.defaultProps = {
 };
 
 export default function Modal(props: ModalProps) {
+    const {children, ...lastProps} = props;
+
     return (
         <AntModal
-            {...props}
+            {...lastProps}
         >
-            {props.children}
+                {children}
         </AntModal>
     )
 }
