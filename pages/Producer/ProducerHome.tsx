@@ -1,13 +1,13 @@
 import React from "react";
 import {Layout} from "../Layout";
 import SubHeader from "../../components/SubHeader";
-import ProductGrid from "../../components/ProductGrid";
+import ProductGridContent from "../../components/ProductGridContent";
 
 const ProducerHome = () => {
     return (
         <Layout>
             <SubHeader/>
-            <ProductGrid/>
+            <ProductGridContent/>
         </Layout>
     );
 };

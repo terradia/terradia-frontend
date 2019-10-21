@@ -10,6 +10,7 @@ const AntContent = AntLayout.Content;
 
 declare interface LayoutProps {
     children?: ReactNode
+    OnLoggedIn?: (loginStatus: boolean) => void
 }
 
 export const Layout = (props: LayoutProps) => {
@@ -17,6 +18,8 @@ export const Layout = (props: LayoutProps) => {
 
     const IsLoggedInHandler = (loginStatus: boolean) => {
         setIsLoggedIn(loginStatus);
+        if (props.OnLoggedIn)
+            props.OnLoggedIn(loginStatus);
     };
 
     return (
