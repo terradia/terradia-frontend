@@ -3,6 +3,7 @@ import Head from 'next/head'
 import {Layout as AntLayout, Menu} from "antd";
 import Login from "../components/Authentication/Login/Login";
 import Register from "../components/Authentication/Register/Register";
+import DrawerMenu from "./Producer/DrawerMenu";
 
 const AntHeader = AntLayout.Header;
 const AntFooter = AntLayout.Footer;
@@ -40,13 +41,20 @@ export const Layout = (props: LayoutProps) => {
                         <Menu.Item key={'logo'} style={{float: 'left'}}>
                             <img src="/static/Titreblanc.png" style={{maxHeight: '6vh', top: '1vh'}} alt={"Terradia"}/>
                         </Menu.Item>
+                        {isLoggedIn &&
+                        <Menu.Item key={'menu'} style={{float: 'right'}}>
+                            <DrawerMenu onLoggedIn={setIsLoggedIn}/>
+                        </Menu.Item>
+                        }
+                        {!isLoggedIn &&
                         <Menu.Item key={'login'} style={{float: 'right'}}>
                             <Login onLoggedIn={IsLoggedInHandler}/>
                         </Menu.Item>
+                        }
                         {!isLoggedIn &&
-                            <Menu.Item key={'register'} style={{float: 'right'}}>
-                                <Register/>
-                            </Menu.Item>
+                        <Menu.Item key={'register'} style={{float: 'right'}}>
+                            <Register/>
+                        </Menu.Item>
                         }
                     </Menu>
                 </AntHeader>
@@ -55,7 +63,8 @@ export const Layout = (props: LayoutProps) => {
                     {props.children}
                 </AntContent>
 
-                <AntFooter style={{height: '10vh', backgroundImage: 'linear-gradient(90deg, #5CC04A 0%, #8FDD3D 100%)'}}>
+                <AntFooter
+                    style={{height: '10vh', backgroundImage: 'linear-gradient(90deg, #5CC04A 0%, #8FDD3D 100%)'}}>
                     Copyright © 2019 Terradia Inc. All rights reserved.
                 </AntFooter>
             </AntLayout>

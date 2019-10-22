@@ -2,7 +2,6 @@ import React from 'react'
 import {Mutation} from "@apollo/react-components";
 import LoginModal from "./LoginModal";
 import ApolloClient, {gql} from "apollo-boost";
-import Logout from "./Logout";
 
 const LOGIN = gql`
     mutation Login($email: String!, $password: String!) {
@@ -39,7 +38,6 @@ declare interface LoginButtonState {
 
 export default class LoginButton extends React.Component<LoginButtonProps, LoginButtonState> {
     OnCompletedHandler = (client: ApolloClient<object>, data: LoginData) => {
-        console.log(data);
         localStorage.setItem('token', data.login.token);
         client.resetStore();
     };
@@ -52,7 +50,7 @@ export default class LoginButton extends React.Component<LoginButtonProps, Login
         const {data, client} = this.props;
 
         if (data && data.getUser) {
-            return <Logout client={client} data={data}/>
+            return null
         } else {
             return (
                 <div>
