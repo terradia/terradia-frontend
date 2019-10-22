@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react'
+import React, {ReactNode} from 'react'
 import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
-import {Responsive, WidthProvider, Layouts} from "react-grid-layout";
+import ReactGridLayout, {Layout, WidthProvider} from "react-grid-layout";
 import AddProduct from "./AddProduct";
 import {Card} from "antd";
 
-const Grid = WidthProvider(Responsive);
+const Grid = WidthProvider(ReactGridLayout);
 
 const GET_PRODUCTS = gql`
     {
@@ -27,22 +27,12 @@ declare interface GetProductsData {
 }
 
 const ProductGridContent = () => {
-    const {loading, error, data} = useQuery<GetProductsData>(GET_PRODUCTS);
-    let layout: Layouts = {};
-
-    useEffect(() => {
-        layout = {
-            lg: [{x: 0, y: 0, w: 2, h: 2, static: true}],
-            md: [{x: 0, y: 0, w: 2, h: 2, static: true}],
-            sm: [{x: 0, y: 0, w: 2, h: 2, static: true}],
-            xs: [{x: 0, y: 0, w: 2, h: 2, static: true}],
-            xss: []
-        };
-    });
+    const {loading, error, data, refetch} = useQuery<GetProductsData>(GET_PRODUCTS);
+    const layout: Layout[] = [{i: "AddProduct", x: 0, y: 0, w: 1, h: 1, minH: 1, maxH: 2, minW: 1, maxW: 2, static: true}];
 
     if (loading) {
         return (
-            <Grid className={"layout"} layouts={layout}>
+            <Grid className={"layout"} layout={layout} cols={4}>
                 <div key={"AddProduct"}>
                     <AddProduct isLoading/>
                 </div>
@@ -55,23 +45,27 @@ const ProductGridContent = () => {
         return null;
     }
 
+    let cards: ReactNode[] = [];
+    if (data && data.getAllProducts) {
+        cards = data.getAllProducts.map((product: any, index: number) => {
+            const x = (index + 1) % 4;
+            const y = Math.ceil((index + 1) / 4);
+            layout.push({i: product.id, x: x, y: y, w: 1, h: 1, minH: 1, maxH: 2, minW: 1, maxW: 2});
+            return (
+                <div key={product.id}>
+                    <Card title={product.name} style={{textAlign: "center"}}>
+                        {product.description}
+                    </Card>
+                </div>
+            )
+        })
+    }
     return (
-        <Grid className={"layout"} layouts={layout}
-              breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-              cols={{lg: 6, md: 5, sm: 4, xs: 2, xxs: 0}}>
-            <div key={"AddProduct"}>
-                <AddProduct/>
+        <Grid className={"layout"} layout={layout} cols={4}>
+            <div key={"AddProduct"} style={{marginBottom: '16px'}}>
+                <AddProduct onProductAdded={refetch}/>
             </div>
-            {data && data.getAllProducts && data.getAllProducts.map((product: any) => {
-                return (
-                    <div key={product.id}>
-                        <Card title={product.name}>
-                            {product.description}
-                        </Card>
-                    </div>
-                )
-            })
-            }
+            {cards}
         </Grid>
     )
 };
