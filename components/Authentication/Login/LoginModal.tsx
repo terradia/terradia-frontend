@@ -28,6 +28,8 @@ declare interface LoginModalState {
     modalLogin: boolean;
     confirmLoading: boolean;
     errorLogin: undefined | string
+    password: string;
+    email: string;
 }
 
 const inputStyle = {
@@ -40,6 +42,8 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
         modalLogin: false,
         confirmLoading: false,
         errorLogin: 'None',
+        password: "",
+        email: ""
     };
 
     openModal = () => {

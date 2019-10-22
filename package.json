@@ -26,6 +26,8 @@
     "null-loader": "^3.0.0",
     "react": "16.9.0",
     "react-dom": "16.9.0",
+    "react-grid-layout": "^0.16.6",
+    "react-router-dom": "^5.1.2",
     "styled-jsx": "^3.2.2",
     "yup": "^0.27.0"
   },
@@ -35,6 +37,7 @@
     "@types/node-fetch": "^2.5.2",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
+    "@types/react-grid-layout": "^0.16.7",
     "@types/yup": "^0.26.24",
     "file-saver": "^2.0.2",
     "typescript": "^3.6.2"

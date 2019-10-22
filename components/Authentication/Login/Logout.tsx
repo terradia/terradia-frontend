@@ -4,21 +4,27 @@ import Button from "../../Button";
 
 declare interface LogoutProps {
     client: ApolloClient<object>;
-    data: any;
+    visible?: any;
+    onLoggedIn?: any;
 }
 
 export default function Logout(props: LogoutProps) {
-    const username = props.data.getUser.firstName + " " + props.data.getUser.lastName;
 
     const onLogoutHandler = () => {
         localStorage.removeItem('token');
-        props.client.resetStore();
+        props.client.resetStore().then(() => {
+                if (props.visible) {
+                    props.visible(false);
+                }
+                if (props.onLoggedIn) {
+                    props.onLoggedIn(false);
+                }
+            }
+        )
     };
 
     return (
         <Button color={"primary"} onClick={onLogoutHandler}
-                style={{marginLeft: '10px'}}>
-            {username + " Logout"}
-        </Button>
+                style={{marginLeft: '10px'}} text={'Logout'}/>
     )
 }

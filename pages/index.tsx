@@ -28,9 +28,11 @@ const client = new ApolloClient({
     connectToDevTools: true
 });
 
+//TODO faire la query getUser ici pour checker le type de client
+
 const Index = () => (
     <ApolloProvider client={client}>
-        <Home type={"producer"}/>
+        <Home/>
     </ApolloProvider>
 );
 
