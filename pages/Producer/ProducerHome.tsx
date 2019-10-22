@@ -3,9 +3,13 @@ import {Layout} from "../Layout";
 import SubHeader from "../../components/SubHeader";
 import ProductGridContent from "../../components/ProductGridContent";
 
-const ProducerHome = () => {
+declare interface ProducerHomeProps {
+    OnLoggedIn?: (loginStatus: boolean) => void
+}
+
+const ProducerHome = (props: ProducerHomeProps) => {
     return (
-        <Layout>
+        <Layout OnLoggedIn={props.OnLoggedIn}>
             <SubHeader/>
             <ProductGridContent/>
         </Layout>

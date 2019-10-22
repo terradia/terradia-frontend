@@ -16,7 +16,7 @@ const Home = (props: HomeProps) => {
     };
 
     if ((props.isLoggedIn || isLoggedIn))
-        return <ProducerHome/>;
+        return <ProducerHome OnLoggedIn={IsLoggedInHandler}/>;
     return <ClientHome OnLoggedIn={IsLoggedInHandler}/>
 };
 

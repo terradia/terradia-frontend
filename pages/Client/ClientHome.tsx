@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Layout} from "../Layout";
 
 declare interface ClientHomeProps {
@@ -6,17 +6,8 @@ declare interface ClientHomeProps {
 }
 
 const ClientHome = (props: ClientHomeProps) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const IsLoggedInHandler = (loginStatus: boolean) => {
-        console.log(isLoggedIn);
-        setIsLoggedIn(loginStatus);
-        if (props.OnLoggedIn)
-            props.OnLoggedIn(loginStatus);
-    };
-
     return (
-        <Layout OnLoggedIn={IsLoggedInHandler}>
+        <Layout OnLoggedIn={props.OnLoggedIn}>
         </Layout>
     )
 };
