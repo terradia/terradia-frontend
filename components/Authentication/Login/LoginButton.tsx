@@ -1,16 +1,8 @@
 import React from 'react'
 import {Mutation} from "@apollo/react-components";
 import LoginModal from "./LoginModal";
-import ApolloClient, {gql} from "apollo-boost";
-
-const LOGIN = gql`
-    mutation Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-            token
-            userId
-        }
-    }
-`;
+import ApolloClient from "apollo-boost";
+import LoginMutation from "../../../apollo/mutation/login"
 
 declare interface LoginData {
     login: {
@@ -54,7 +46,7 @@ export default class LoginButton extends React.Component<LoginButtonProps, Login
         } else {
             return (
                 <div>
-                    <Mutation<LoginData> mutation={LOGIN} onCompleted={(data) => {
+                    <Mutation<LoginData> mutation={LoginMutation} onCompleted={(data) => {
                         this.OnCompletedHandler(client, data)
                     }} onError={this.OnErrorHandler}>
                         {(login) => (<LoginModal login={login}/>)}

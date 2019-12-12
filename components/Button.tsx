@@ -43,6 +43,7 @@ export default function Button(props: ButtonProps)  {
                        target={props.targetLink}
                        block={props.fitParentWidth}
                        htmlType={props.htmlType}
+                       style={props.style}
             >
                 {props.icon}
                 {props.text}

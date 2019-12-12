@@ -8,6 +8,17 @@ declare interface LogoutProps {
     onLoggedIn?: any;
 }
 
+const buttonStyle = {
+    backgroundColor: '#5CC04A',
+    borderColor: '#5CC04A',
+    color: '#FFFFF',
+    width: '400px',
+    height: '45px',
+    position: 'absolute',
+    bottom: 10
+
+};
+
 export default function Logout(props: LogoutProps) {
 
     const onLogoutHandler = () => {
@@ -25,6 +36,6 @@ export default function Logout(props: LogoutProps) {
 
     return (
         <Button color={"primary"} onClick={onLogoutHandler}
-                style={{marginLeft: '10px'}} text={'Logout'}/>
+                style={buttonStyle} text={'Logout'}/>
     )
 }

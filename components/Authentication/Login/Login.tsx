@@ -1,22 +1,10 @@
 import React from "react";
-import {ApolloError, gql} from "apollo-boost"
+import {ApolloError} from "apollo-boost"
 import {ApolloConsumer, Query} from "@apollo/react-components";
 import LoginButton from "./LoginButton";
 import {Icon} from "antd";
+import getUserQuery from '../../../apollo/query/getUser';
 
-const GET_USER = gql`
-    {
-        getUser {
-            id
-            firstName
-            lastName
-            email
-            phone
-            password
-            validated
-        }
-    }
-`;
 
 declare interface LoginProps {
     onLoggedIn: (loginStatus: boolean) => void
@@ -53,7 +41,7 @@ export default class Login extends React.Component<LoginProps, LoginState> {
         return (
             <ApolloConsumer>
                 {client => (
-                    <Query<GetUserData> query={GET_USER} onError={this.onErrorHandler}>
+                    <Query<GetUserData> query={getUserQuery} onError={this.onErrorHandler}>
                         {({loading, data}) => {
                             if (loading)
                                 return <Icon type={"loading"}/>;

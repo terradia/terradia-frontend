@@ -1,19 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import {Layout} from "../Layout";
-import SubHeader from "../../components/SubHeader";
-import ProductGridContent from "../../components/ProductGridContent";
+import Products from "./Menu/Products";
+import Profil from "./Menu/Profil";
 
 declare interface ProducerHomeProps {
     OnLoggedIn?: (loginStatus: boolean) => void
 }
 
 const ProducerHome = (props: ProducerHomeProps) => {
+    const [itemMenu, setItemMenu] = useState('products');
+
     return (
-        <Layout OnLoggedIn={props.OnLoggedIn}>
-            <SubHeader/>
-            <ProductGridContent/>
+        <Layout OnLoggedIn={props.OnLoggedIn} setItemMenu={setItemMenu}>
+            {itemMenu === 'products' &&
+                <Products/>
+            }
+            {itemMenu === 'profil' &&
+                <Profil/>
+            }
         </Layout>
     );
 };
 
-export default ProducerHome
+export default ProducerHome;

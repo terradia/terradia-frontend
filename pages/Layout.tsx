@@ -12,6 +12,7 @@ const AntContent = AntLayout.Content;
 declare interface LayoutProps {
     children?: ReactNode
     OnLoggedIn?: (loginStatus: boolean) => void
+    setItemMenu?: any
 }
 
 export const Layout = (props: LayoutProps) => {
@@ -46,7 +47,7 @@ export const Layout = (props: LayoutProps) => {
                         </Menu.Item>
                         {isLoggedIn &&
                         <Menu.Item key={'menu'} style={{float: 'right'}}>
-                            <DrawerMenu onLoggedIn={setIsLoggedIn}/>
+                            <DrawerMenu onLoggedIn={setIsLoggedIn} setItemMenu={props.setItemMenu} />
                         </Menu.Item>
                         }
                         {!isLoggedIn &&

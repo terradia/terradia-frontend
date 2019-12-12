@@ -47,5 +47,5 @@ export default function Modal(props: ModalProps) {
         >
                 {children}
         </AntModal>
-    )
+    );
 }

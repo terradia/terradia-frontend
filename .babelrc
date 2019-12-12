@@ -1,13 +1,15 @@
 {
   "presets": ["next/babel"],
   "plugins": [
+    "babel-plugin-inline-import-graphql-ast",
+    "import-graphql",
+    "graphql-tag",
     [
       "import",
       {
         "libraryName": "antd",
         "style": "css"
       },
-
       "styled-jsx/babel"
     ]
   ]
