@@ -1,25 +1,7 @@
 import React from 'react'
 import {Mutation} from "@apollo/react-components";
 import RegisterModal from "./RegisterModal";
-import {gql} from "apollo-boost";
-
-
-const REGISTER = gql`
-    mutation reg ($firstname: String!, $lastname: String!, $password: String!, $email: String!, $phone: String!) {
-        register (
-            firstName: $firstname
-            lastName: $lastname
-            password: $password
-            email: $email
-            phone: $phone
-        )
-        {
-            token
-            userId
-            message
-        }
-    }
-`;
+import RegisterMutation from '../../../apollo/mutation/register'
 
 declare interface RegisterButtonProps {
 }
@@ -52,7 +34,7 @@ export default class RegisterButton extends React.Component<RegisterButtonProps,
 
             return (
                 <div>
-                    <Mutation<RegisterData> mutation={REGISTER} onCompleted={(data) => {
+                    <Mutation<RegisterData> mutation={RegisterMutation} onCompleted={(data) => {
                         this.OnCompletedHandler(data)
                     }} onError={this.OnErrorHandler}>
                         {(register) => (<RegisterModal register={register}/>)

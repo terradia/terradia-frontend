@@ -10,6 +10,9 @@ const GET_USER = gql`
             phone
             password
             validated
+            company {
+                name
+            }
         }
     }
 `;

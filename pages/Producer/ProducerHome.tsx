@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Layout} from "../Layout";
+import {ProducerLayout} from "./ProducerLayout";
 import Products from "./Menu/Products";
 import Profil from "./Menu/Profil";
 
@@ -11,14 +11,14 @@ const ProducerHome = (props: ProducerHomeProps) => {
     const [itemMenu, setItemMenu] = useState('products');
 
     return (
-        <Layout OnLoggedIn={props.OnLoggedIn} setItemMenu={setItemMenu}>
+        <ProducerLayout OnLoggedIn={props.OnLoggedIn} setItemMenu={setItemMenu} itemMenu={itemMenu}>
             {itemMenu === 'products' &&
                 <Products/>
             }
             {itemMenu === 'profil' &&
                 <Profil/>
             }
-        </Layout>
+        </ProducerLayout>
     );
 };
 

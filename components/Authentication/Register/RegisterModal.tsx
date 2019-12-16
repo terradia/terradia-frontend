@@ -71,7 +71,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                 lastname: values.lastname,
                 email: values.email,
                 password: values.password,
-                phone: values.phone
+                phone: null
             }
         }).then((data: any) => {
             if (data) {

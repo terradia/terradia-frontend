@@ -1,10 +1,9 @@
 import React, {ReactNode, useState} from "react";
 import Head from 'next/head'
 import {Layout as AntLayout, Menu} from "antd";
-import Login from "../components/Authentication/Login/Login";
-import Register from "../components/Authentication/Register/Register";
-import DrawerMenu from "./Producer/DrawerMenu";
-import Anchor from "../components/Anchor";
+import Login from "../../components/Authentication/Login/Login";
+import Register from "../../components/Authentication/Register/Register";
+import DrawerMenu from "../Producer/DrawerMenu";
 
 const AntHeader = AntLayout.Header;
 const AntFooter = AntLayout.Footer;
@@ -18,11 +17,7 @@ declare interface LayoutProps {
     itemMenu?: string;
 }
 
-const linkTab = [{href: '#General', title: 'Général'}, {href: '#Notifications', title: 'Notifications'}];
-
-const searchStyle = {backgroundColor: 'green', height: '375px'};
-
-export const Layout = (props: LayoutProps) => {
+export const ClientLayout = (props: LayoutProps) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const IsLoggedInHandler = (loginStatus: boolean) => {
@@ -70,25 +65,8 @@ export const Layout = (props: LayoutProps) => {
                     </Menu>
                 </AntHeader>
 
-                {props.itemMenu === 'profil' &&
-                <AntLayout>
-                    <AntSider>
-                        <Anchor linkTab={linkTab} affix={true} style={{"margin": "5px"}}/>
-                    </AntSider>
-
-                    <AntContent style={{height: '80vh', overflow: 'auto'}}>
-                        {props.children}
-                    </AntContent>
-                </AntLayout>}
-
-                {props.itemMenu === 'products' &&
-                <AntContent style={{height: '80vh', overflow: 'scroll', display: 'flex'}}>
-                    <div id="search" style={searchStyle}>
-                        <p>Recherche</p>
-                    </div>
-                    <div>
-                        {props.children}
-                    </div>
+                <AntContent style={{height: '80vh', overflow: 'scroll'}}>
+                    {props.children}
                 </AntContent>}
 
 

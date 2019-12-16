@@ -3,36 +3,50 @@ import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
 import ReactGridLayout, {Layout, WidthProvider} from "react-grid-layout";
 import AddProduct from "./AddProduct";
-import {Card} from "antd";
+import {Row, Col, Slider} from 'antd';
+
+// import {Card} from "antd";
+import getProductsQuery from "../apollo/query/getAllProducts";
+import Card from "./Card";
 
 const Grid = WidthProvider(ReactGridLayout);
 
-const GET_PRODUCTS = gql`
-    {
-        getAllProducts {
-            id
-            name
-            description
-        }
-    }
-`;
 
 declare interface GetProductsData {
     getAllProducts: [{
-            id: string
+        id: string
+        name: string;
+        description: string;
+        categories: {
             name: string;
-            description: string;
-            categories: string;
+        };
     }]
 }
 
 const ProductGridContent = () => {
-    const {loading, error, data, refetch} = useQuery<GetProductsData>(GET_PRODUCTS);
-    const layout: Layout[] = [{i: "AddProduct", x: 0, y: 0, w: 1, h: 1, minH: 1, maxH: 2, minW: 1, maxW: 2, static: true}];
+    const {loading, error, data, refetch} = useQuery<GetProductsData>(getProductsQuery);
+    const nb_cols = 5;
+
+    const getCategoriePicture = (category: string) => {
+        switch (category) {
+            case 'cheese':
+                return 'cheese.jpg';
+            case 'ice-cream':
+                return 'iceCream.jpg';
+            case 'meat':
+                return 'meat.jpg';
+            case 'vegetables':
+                return 'vegetable.jpg';
+            case 'wine':
+                return 'wine.jpg';
+            case undefined:
+                return null;
+        }
+    };
 
     if (loading) {
         return (
-            <Grid className={"layout"} layout={layout} cols={4}>
+            <Grid className={"layout"} cols={nb_cols}>
                 <div key={"AddProduct"}>
                     <AddProduct isLoading/>
                 </div>
@@ -48,25 +62,28 @@ const ProductGridContent = () => {
     let cards: ReactNode[] = [];
     if (data && data.getAllProducts) {
         cards = data.getAllProducts.map((product: any, index: number) => {
-            const x = (index + 1) % 4;
-            const y = Math.ceil((index + 1) / 4);
-            layout.push({i: product.id, x: x, y: y, w: 1, h: 1, minH: 1, maxH: 2, minW: 1, maxW: 2});
+            const x = (index + 1) % nb_cols;
+            const y = Math.ceil((index + 1) / nb_cols);
             return (
                 <div key={product.id}>
-                    <Card title={product.name} style={{textAlign: "center"}}>
-                        {product.description}
-                    </Card>
+                    {/*<Col lg={{span: 2, offset: 3}}>*/}
+                    <Col span={24 / 4}>
+                        <Card
+                            title={product.name}
+                            backgroundPath={`/static/foodCategories/${getCategoriePicture( product.categories.length > 0 ? product.categories[0].name : undefined)}`}
+                        />
+                    </Col>
                 </div>
             )
         })
     }
     return (
-        <Grid className={"layout"} layout={layout} cols={4}>
-            <div key={"AddProduct"} style={{marginBottom: '16px'}}>
+        <Row gutter={[30, 30]} style={{width: '100%', marginLeft: '4%', overflow: 'hidden', paddingBottom: '30px'}}>
+            <Col span={24 / 4}>
                 <AddProduct onProductAdded={refetch}/>
-            </div>
+            </Col>
             {cards}
-        </Grid>
+        </Row>
     )
 };
 

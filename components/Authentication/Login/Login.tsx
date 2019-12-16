@@ -19,6 +19,12 @@ declare interface GetUserData {
     getUser: {
         firstName: string;
         lastName: string;
+        email: string;
+        password: string;
+        phone: string;
+        validated: boolean;
+        company: any;
+        customer: any;
     }
 }
 

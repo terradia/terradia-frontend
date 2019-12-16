@@ -1,10 +1,10 @@
 import React, {ReactNode, useState} from "react";
 import Head from 'next/head'
 import {Layout as AntLayout, Menu} from "antd";
-import Login from "../components/Authentication/Login/Login";
-import Register from "../components/Authentication/Register/Register";
-import DrawerMenu from "./Producer/DrawerMenu";
-import Anchor from "../components/Anchor";
+import Login from "../../components/Authentication/Login/Login";
+import Register from "../../components/Authentication/Register/Register";
+import DrawerMenu from "../Producer/DrawerMenu";
+import Anchor from "../../components/Anchor";
 
 const AntHeader = AntLayout.Header;
 const AntFooter = AntLayout.Footer;
@@ -20,9 +20,9 @@ declare interface LayoutProps {
 
 const linkTab = [{href: '#General', title: 'Général'}, {href: '#Notifications', title: 'Notifications'}];
 
-const searchStyle = {backgroundColor: 'green', height: '375px'};
+const searchStyle = {backgroundColor: 'green', height: '30vh'};
 
-export const Layout = (props: LayoutProps) => {
+export const ProducerLayout = (props: LayoutProps) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const IsLoggedInHandler = (loginStatus: boolean) => {
@@ -42,32 +42,25 @@ export const Layout = (props: LayoutProps) => {
                 <AntHeader style={{
                     height: '10vh',
                     width: '100%',
-                    display: 'fixed',
                     position: 'relative',
                     backgroundColor: '#E5E5E5',
                     justifyContent: 'space-between'
                 }}
                 >
-                    <Menu mode={"horizontal"} style={{lineHeight: '8vh', background: 'none'}}>
-                        <Menu.Item key={'logo'} style={{float: 'left'}}>
-                            <img src="/static/Titre.png" style={{maxHeight: '6vh', top: '1vh'}} alt={"Terradia"}/>
-                        </Menu.Item>
+                    <div id='logo' style={{position: "absolute", top: '1vh'}}>
+                        <img src="/static/Titre.png" style={{maxHeight: '6vh', top: '1vh'}} alt={"Terradia"}/>
+                    </div>
+                    <div style={{top: '1vh', right: '35px', position: 'absolute'}}>
                         {isLoggedIn &&
-                        <Menu.Item key={'menu'} style={{float: 'right'}}>
-                            <DrawerMenu onLoggedIn={setIsLoggedIn} setItemMenu={props.setItemMenu}/>
-                        </Menu.Item>
+                        <DrawerMenu onLoggedIn={setIsLoggedIn} setItemMenu={props.setItemMenu}/>
                         }
                         {!isLoggedIn &&
-                        <Menu.Item key={'login'} style={{float: 'right'}}>
-                            <Login onLoggedIn={IsLoggedInHandler}/>
-                        </Menu.Item>
+                        <Login onLoggedIn={IsLoggedInHandler}/>
                         }
                         {!isLoggedIn &&
-                        <Menu.Item key={'register'} style={{float: 'right'}}>
-                            <Register/>
-                        </Menu.Item>
+                        <Register/>
                         }
-                    </Menu>
+                    </div>
                 </AntHeader>
 
                 {props.itemMenu === 'profil' &&
@@ -76,26 +69,31 @@ export const Layout = (props: LayoutProps) => {
                         <Anchor linkTab={linkTab} affix={true} style={{"margin": "5px"}}/>
                     </AntSider>
 
-                    <AntContent style={{height: '80vh', overflow: 'auto'}}>
+                    <AntContent style={{height: '90vh', overflow: 'auto', display: 'block'}}>
                         {props.children}
+                        <AntFooter
+                            style={{
+                                height: '7vh',
+                                background: 'linear-gradient(90deg, #8FDD3D 0%, #5EC14A 100%), #C4C4C4'
+                            }}>
+                            Copyright © 2019 Terradia Inc. All rights reserved.
+                        </AntFooter>
                     </AntContent>
                 </AntLayout>}
 
                 {props.itemMenu === 'products' &&
-                <AntContent style={{height: '80vh', overflow: 'scroll', display: 'flex'}}>
-                    <div id="search" style={searchStyle}>
-                        <p>Recherche</p>
-                    </div>
-                    <div>
-                        {props.children}
-                    </div>
+                <AntContent style={{height: '90vh', overflow: 'auto'}}>
+                    {props.children}
+                    <AntFooter
+                        style={{
+                            height: '7vh',
+                            background: 'linear-gradient(90deg, #8FDD3D 0%, #5EC14A 100%), #C4C4C4'
+                        }}>
+                        Copyright © 2019 Terradia Inc. All rights reserved.
+                    </AntFooter>
                 </AntContent>}
 
 
-                <AntFooter
-                    style={{height: '10vh', backgroundImage: 'linear-gradient(90deg, #5CC04A 0%, #8FDD3D 100%)'}}>
-                    Copyright © 2019 Terradia Inc. All rights reserved.
-                </AntFooter>
             </AntLayout>
         </div>
     )

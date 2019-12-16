@@ -1,4 +1,4 @@
-import {Icon} from 'antd';
+import {Icon, Avatar} from 'antd';
 import Button from '../../components/Button';
 import Drawer from '../../components/Drawer';
 import React, {useState} from "react";
@@ -33,14 +33,20 @@ const buttonStyle = {
     marginBottom: '20px'
 };
 
+const avatarStyle = {
+    border: '2px solid #8FDD3D'
+};
+
 const title = <div style={headerStyle}> <Icon type='home'/> Menu </div>;
 
 export default function DrawerMenu(props: DrawerMenuProps) {
     const [visible, setVisible] = useState(false);
-    console.log('Drawer props', props);
+    const [hover, setHover] = useState(false);
     return (
         <div>
-            <Button onClick={() => setVisible(!visible)} text={'Menu'} color={"primary"}/>
+            <div onClick={() => setVisible(!visible)} onMouseOver={() => setHover(true)} onMouseLeave={() => {setHover(false)}}>
+                <Avatar size={64} icon="user" shape='circle' style={Object.assign(avatarStyle, hover && {cursor: 'pointer'})}/>
+            </div>
             <ApolloConsumer>
                 {client => (
                     <Drawer

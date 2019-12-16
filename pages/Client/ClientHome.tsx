@@ -1,5 +1,5 @@
 import React from "react";
-import {Layout} from "../Layout";
+import {ClientLayout} from "./ClientLayout";
 
 declare interface ClientHomeProps {
     OnLoggedIn?: (loginStatus: boolean) => void
@@ -7,8 +7,8 @@ declare interface ClientHomeProps {
 
 const ClientHome = (props: ClientHomeProps) => {
     return (
-        <Layout OnLoggedIn={props.OnLoggedIn}>
-        </Layout>
+        <ClientLayout OnLoggedIn={props.OnLoggedIn}>
+        </ClientLayout>
     )
 };
 

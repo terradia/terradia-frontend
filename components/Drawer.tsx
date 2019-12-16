@@ -29,7 +29,6 @@ AntDrawer.defaultProps = {
 };
 
 export default function Drawer(props: DrawerProps) {
-    console.log('drawerProps', props);
     const {children, ...lastProps} = props;
 
     return (
