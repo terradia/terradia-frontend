@@ -1,6 +1,4 @@
 import React, {useState} from "react"
-import Link from "next/link";
-import {Drawer as AntDrawer} from "antd";
 
 declare interface CardProps {
     hoverable?: boolean;

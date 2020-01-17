@@ -4,7 +4,7 @@ import Input from '../../Input'
 import Button from "../../Button";
 import {Formik} from "formik";
 import * as Yup from 'yup';
-import {Alert, notification as _notification} from "antd";
+import {Alert, Card, notification as _notification} from "antd";
 
 const RegisterSchema = Yup.object().shape({
     email: Yup.string()
@@ -71,7 +71,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                 lastname: values.lastname,
                 email: values.email,
                 password: values.password,
-                phone: null
+                phone: values.phone
             }
         }).then((data: any) => {
             if (data) {
@@ -97,9 +97,14 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
     render() {
         return (
             <div>
-                <Button color={"primary"} onClick={this.openModal}>
-                    Register
-                </Button>
+                <Button text={'S\'enregistrer'} size={'large'} style={{
+                    width: '100%',
+                    marginBottom: '7%',
+                    borderColor: '#5CC04A',
+                    color: '#5CC04A'
+                }}
+                        onClick={this.openModal}
+                />
                 <Formik
                     initialValues={{firstname: '', lastname: '', email: '', password: '', phone: ''}}
                     validationSchema={RegisterSchema}
@@ -135,7 +140,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                                 borderColor: props.errors.firstname ? 'red' : undefined
                                             }, ...inputStyle
                                         }}
-                                        placeholder={'Firstname'}
+                                        placeholder={'Prénom'}
                                         id={'id_firstname'}
                                         autoComplete={'given-name'}
                                         onChange={props.handleChange}
@@ -152,7 +157,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                                 borderColor: props.errors.lastname ? 'red' : undefined
                                             }, ...inputStyle
                                         }}
-                                        placeholder={'Lastname'}
+                                        placeholder={'Nom de famille'}
                                         id={'id_lastname'}
                                         autoComplete={'family-name'}
                                         onChange={props.handleChange}
@@ -169,13 +174,30 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                                 borderColor: props.errors.email ? 'red' : undefined
                                             }, ...inputStyle
                                         }}
-                                        placeholder={'Email'}
+                                        placeholder={'Adresse mail'}
                                         id={'id_login'}
                                         autoComplete={'email'}
                                         onChange={props.handleChange}
                                     />
                                     {props.errors.email &&
                                     <div id="feedback" style={{color: "red"}}>{props.errors.email}</div>}
+
+                                    <Input
+                                        name={'phone'}
+                                        type={"default"}
+                                        style={{
+                                            ...{
+                                                color: props.errors.phone ? 'red' : undefined,
+                                                borderColor: props.errors.phone ? 'red' : undefined
+                                            }, ...inputStyle
+                                        }}
+                                        placeholder={'Téléphone'}
+                                        id={'id_phone'}
+                                        autoComplete={'phone'}
+                                        onChange={props.handleChange}
+                                    />
+                                    {props.errors.phone &&
+                                    <div id="feedback" style={{color: "red"}}>{props.errors.phone}</div>}
 
                                     <Input
                                         name={'password'}
@@ -186,7 +208,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                                 borderColor: props.errors.password ? 'red' : undefined
                                             }, ...inputStyle
                                         }}
-                                        placeholder={'Password'}
+                                        placeholder={'Mot de passe'}
                                         id={'id_password'}
                                         autoComplete={'new-password'}
                                         onChange={props.handleChange}

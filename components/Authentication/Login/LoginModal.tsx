@@ -88,7 +88,14 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
     render() {
         return (
             <div>
-                <Button color={"primary"} onClick={this.openModal}>Login</Button>
+                <Button text={'Se connecter'} size={'large'} style={{
+                    backgroundImage: 'linear-gradient(90deg, #5CC04A 0%, #8FDD3D 100%)',
+                    width: '100%',
+                    color: 'white',
+
+                }}
+                        onClick={this.openModal}
+                />
                 <Formik
                     initialValues={{email: '', password: '', rememberMe: false}}
                     validationSchema={SignInSchema}
@@ -110,8 +117,8 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                                 destroyOnClose={true}
                                 okText={"Login"}
                                 onOk={() => props.validateForm().then(() => {
-                                        props.submitForm();
-                                    })
+                                    props.submitForm();
+                                })
                                 }
                             >
                                 <Alert message="We cannot find an account with that email/password" type="error"

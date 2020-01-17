@@ -10,7 +10,7 @@ export interface ButtonProps {
     shape?: ButtonShape;
     style?: object
     isLoading?: boolean;
-    icon?: undefined;
+    icon?: any;
     size?: ButtonSize;
     targetLink?: string;
     htmlType?: 'button' | 'reset' | 'submit' | undefined;

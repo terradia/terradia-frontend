@@ -1,7 +1,7 @@
 import {gql} from "apollo-boost";
 
 const REGISTER = gql`
-    mutation reg ($firstname: String!, $lastname: String!, $password: String!, $email: String!, $phone: String!) {
+    mutation Register ($firstname: String!, $lastname: String!, $password: String!, $email: String!, $phone: String!) {
         register (
             firstName: $firstname
             lastName: $lastname
