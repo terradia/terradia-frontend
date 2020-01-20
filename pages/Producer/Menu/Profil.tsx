@@ -48,7 +48,6 @@ const Profil = () => {
                                         <Descriptions.Item label="UserName">{data.getUser.firstName} {data.getUser.lastName}</Descriptions.Item>
                                         <Descriptions.Item label="Telephone">{data.getUser.phone}</Descriptions.Item>
                                         <Descriptions.Item label="Email">{data.getUser.email}</Descriptions.Item>
-                                        <Descriptions.Item label="Company">{data.getUser.company.name}</Descriptions.Item>
                                     </Descriptions>
                                 )
                             }

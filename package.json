@@ -19,6 +19,7 @@
     "apollo-link-http": "^1.5.16",
     "babel-core": "^6.26.3",
     "babel-plugin-import": "^1.12.1",
+    "babel-plugin-lodash": "^3.3.4",
     "eslint-loader": "^3.0.3",
     "formik": "^1.5.8",
     "graphql": "^14.5.8",
@@ -36,6 +37,7 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^5.0.1",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/node": "^12.7.4",
     "@types/node-fetch": "^2.5.2",
@@ -47,6 +49,7 @@
     "@typescript-eslint/parser": "^2.10.0",
     "babel-plugin-graphql-tag": "^2.5.0",
     "babel-plugin-import-graphql": "^2.7.0",
+    "babel-plugin-inline-react-svg": "^1.1.0",
     "eslint": "^6.7.2",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",

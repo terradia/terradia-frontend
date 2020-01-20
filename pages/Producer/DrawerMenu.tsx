@@ -4,6 +4,8 @@ import Drawer from '../../components/Drawer';
 import React, {useState} from "react";
 import Logout from "../../components/Authentication/Login/Logout";
 import {ApolloConsumer} from "@apollo/react-hooks";
+import Company from "../../components/Company/Company";
+import CreateCompany from "../../components/Company/CreateCompany/CreateCompany";
 
 interface DrawerMenuProps {
     child ?: React.ReactChild;
@@ -64,6 +66,8 @@ export default function DrawerMenu(props: DrawerMenuProps) {
                         <Button color={"primary"} onClick={() => {props.setItemMenu('profil')}} style={buttonStyle} text={'Mon profil'}/>
                         <Button color={"primary"} onClick={() => {alert('Statistiques')}} style={buttonStyle} text={'Statistiques'}/>
                         <Button color={"primary"} onClick={() => {props.setItemMenu('products')}} style={buttonStyle} text={'Mes produits'}/>
+                        <Company/>
+                        <CreateCompany/>
 
                     </Drawer>
                 )}

@@ -8,7 +8,7 @@ import Home from './Home'
 import ApolloClient from 'apollo-client'
 
 const httpLink = createHttpLink({
-    uri: "http://localhost:8000/graphql",
+    uri: "http://localhost:7071/api",
     fetch: fetch
 });
 

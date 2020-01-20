@@ -8,6 +8,16 @@
         "style": "css"
       },
       "styled-jsx/babel"
+    ],
+    "inline-react-svg",
+    "@babel/syntax-dynamic-import",
+    [
+      "lodash",
+      {
+        "id": [
+          "lodash"
+        ]
+      }
     ]
   ]
 }
