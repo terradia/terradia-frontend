@@ -117,7 +117,7 @@ class LoginModal extends React.Component<LoginModalProps, LoginModalState> {
                     {(props: any) => {
                         return (
                             <Modal
-                                title={"Login"}
+                                title={"Connexion"}
                                 centered
                                 visible={this.state.modalLogin}
                                 confirmLoading={this.state.confirmLoading}

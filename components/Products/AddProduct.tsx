@@ -2,7 +2,7 @@ import React from "react";
 import {Card, Icon} from "antd";
 import {gql} from "apollo-boost";
 import {useMutation} from "@apollo/react-hooks";
-import AddProductMutation from '../apollo/mutation/addProduct';
+import AddProductMutation from '../../apollo/mutation/addProduct';
 
 
 declare interface AddProductData {
@@ -44,7 +44,7 @@ const AddProduct = (props: AddProductProps) => {
     return (
         <Card key={"default"}
               title={props.isLoading ? "Loading Products" : "Add new Product"}
-              style={{textAlign: "center", border: "1px solid #E5E5E5", borderRadius: "15px", width: '300px', height: '175px'}}
+              style={{textAlign: "center", border: "1px solid #E5E5E5", borderRadius: "15px", width: '100%', height: '175px'}}
               hoverable
         >
             {icon}

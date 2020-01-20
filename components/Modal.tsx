@@ -8,6 +8,7 @@ export interface ModalProps {
     closeIcon?: ReactNode;
     confirmLoading?: boolean;
     destroyOnClose?: boolean;
+    footer ?: string | ReactNode;
     mask?: boolean;
     maskClosable?: boolean;
     maskStyle?: object;
