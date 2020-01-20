@@ -1,13 +1,16 @@
-import React, {ReactNode} from 'react'
+import React, {ReactNode, useState} from 'react'
 import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
 import ReactGridLayout, {Layout, WidthProvider} from "react-grid-layout";
 import AddProduct from "./AddProduct";
-import {Row, Col, Slider} from 'antd';
-
-// import {Card} from "antd";
-import getProductsQuery from "../apollo/query/getAllProducts";
-import Card from "./Card";
+import {Row, Col, Slider, Divider, Avatar} from 'antd';
+import getProductsQuery from "../../apollo/query/getAllProducts";
+import ProductsCard from "./ProductsCard";
+import Modal from "../Modal";
+import Rate from "../Rate";
+import List from "../List";
+import {List as AntList} from 'antd';
+import ProductModal from "./ProductModal";
 
 const Grid = WidthProvider(ReactGridLayout);
 
@@ -17,32 +20,17 @@ declare interface GetProductsData {
         id: string
         name: string;
         description: string;
-        categories: {
+        categories: [{
             name: string;
-        };
+        }];
     }]
 }
 
 const ProductGridContent = () => {
     const {loading, error, data, refetch} = useQuery<GetProductsData>(getProductsQuery);
-    const nb_cols = 5;
+    const nb_cols = 6;
 
-    const getCategoriePicture = (category: string) => {
-        switch (category) {
-            case 'cheese':
-                return 'cheese.jpg';
-            case 'ice-cream':
-                return 'iceCream.jpg';
-            case 'meat':
-                return 'meat.jpg';
-            case 'vegetables':
-                return 'vegetable.jpg';
-            case 'wine':
-                return 'wine.jpg';
-            case undefined:
-                return null;
-        }
-    };
+
 
     if (loading) {
         return (
@@ -67,19 +55,16 @@ const ProductGridContent = () => {
             return (
                 <div key={product.id}>
                     {/*<Col lg={{span: 2, offset: 3}}>*/}
-                    <Col span={24 / 4}>
-                        <Card
-                            title={product.name}
-                            backgroundPath={`/static/foodCategories/${getCategoriePicture( product.categories.length > 0 ? product.categories[0].name : undefined)}`}
-                        />
+                    <Col span={24 / nb_cols}>
+                        <ProductModal product={product}/>
                     </Col>
                 </div>
             )
         })
     }
     return (
-        <Row gutter={[30, 30]} style={{width: '100%', marginLeft: '4%', overflow: 'hidden', paddingBottom: '30px'}}>
-            <Col span={24 / 4}>
+        <Row gutter={[16, 16]} style={{width: '100%', margin: '0', overflow: 'hidden', paddingBottom: '5%'}}>
+            <Col span={24 / nb_cols}>
                 <AddProduct onProductAdded={refetch}/>
             </Col>
             {cards}

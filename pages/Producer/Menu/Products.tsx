@@ -1,5 +1,5 @@
 import SubHeader from "../../../components/SubHeader";
-import ProductGridContent from "../../../components/ProductGridContent";
+import ProductGridContent from "../../../components/Products/ProductGridContent";
 import React from "react";
 import Input from "../../../components/Input";
 import {Icon} from "antd";
